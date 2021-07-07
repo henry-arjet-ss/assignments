@@ -5,6 +5,7 @@ package com.ss.jb.one.one;
 
 /**
  * First assignment in JavaBasics 1
+ * Prints a pretty pattern
  * Henry Arjet
  * July 2021 Cloud Engineering
  */

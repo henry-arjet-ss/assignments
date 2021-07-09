@@ -3,6 +3,15 @@ package com.ss.jb.wk1.one;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
+
+/*
+* Assignment 1 in Java Basics Week 1 
+* Several predicate lambdas that take integer input
+* Tested by the PerformanceOperationTest class 
+* Henry Arjet 
+* July 2021 Cloud Engineering
+*/
+
 @FunctionalInterface
 public interface PerformOperation {
 	Predicate<Integer> isOdd = (i) -> {

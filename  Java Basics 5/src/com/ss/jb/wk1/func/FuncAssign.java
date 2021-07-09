@@ -4,6 +4,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+
+/*
+* Functional assignments for JavaBasics 5
+* Henry Arjet 
+* July 2021 Cloud Engineering
+*/
+
 public class FuncAssign {
 	
 	//Assignment 2:

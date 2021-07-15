@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.List;
 
 public abstract class BaseDAO<T> {
@@ -13,8 +14,20 @@ public abstract class BaseDAO<T> {
 		
 	}
 	
-	public void save(String sql, Object[] vals) throws ClassNotFoundException, SQLException {
-		PreparedStatement pstmt = conn.prepareStatement(sql);
+//	public void save(String sql, Object[] vals) throws ClassNotFoundException, SQLException {
+//		PreparedStatement pstmt = conn.prepareStatement(sql);
+//		if (vals!= null) {
+//			int ct = 1;
+//			for(Object o: vals) {
+//				pstmt.setObject(ct,  o);
+//				ct++;
+//			}
+//		}
+//		pstmt.executeUpdate();
+//	}
+	
+	public int save(String sql, Object[] vals) throws ClassNotFoundException, SQLException {
+		PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 		if (vals!= null) {
 			int ct = 1;
 			for(Object o: vals) {
@@ -23,6 +36,10 @@ public abstract class BaseDAO<T> {
 			}
 		}
 		pstmt.executeUpdate();
+		ResultSet rs = pstmt.getGeneratedKeys();
+		if (rs.next()) {
+			return rs.getInt(1);
+		} else return 0;
 	}
 	
 	public List<T> read(String sql, Object[] vals) throws ClassNotFoundException, SQLException {
@@ -37,6 +54,8 @@ public abstract class BaseDAO<T> {
 		ResultSet rs = pstmt.executeQuery();
 		return extractData(rs);
 	}
+	
+	
 	
 	public abstract List<T> extractData(ResultSet rs) throws ClassNotFoundException, SQLException;
 }

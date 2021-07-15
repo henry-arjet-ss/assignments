@@ -27,12 +27,12 @@ public class BookGenreDAO extends BaseDAO<BookGenre> {
 		
 	}
 	
-	public BookGenre readBookGenreByID(int id) throws ClassNotFoundException, SQLException{
+	public List<BookGenre> readBookGenreByID(int id) throws ClassNotFoundException, SQLException{
 		List<BookGenre> ret = read("SELECT * FROM tbl_book_genres WHERE bookId = ?", new Object[] {id});
 		if (ret.size() == 0) { //couldn't find a match
-			return new BookGenre(0, 0);
+			return null;
 		}
-		return ret.get(0);
+		return ret;
 	}
 	
 	//required for BaseDAO read method

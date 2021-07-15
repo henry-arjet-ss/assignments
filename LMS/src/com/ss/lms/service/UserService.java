@@ -37,15 +37,58 @@ public class UserService {
 			testOut.add(prompt); //redirect output to testOut
 			return testIn.get(inputIndex++); //returns the next input from the test case 
 		}
-		System.out.println(prompt);
+		
+		
+		
 		String ret = null;
-		try {
-			ret = input.readLine();
-		} catch (IOException e) {
-			System.out.println("Error taking string input");
-		} 
+		
+		boolean validInput = false; //used to keep prompting the user until good input is given
+		while(!validInput) {		
+			System.out.println(prompt);
+			try {
+				ret = input.readLine();
+			} catch (IOException e) {
+				System.out.println("Error taking string input\n");
+			}
+			if (ret.length() == 0) {
+				System.out.println("Please type something\n");
+			} else if (ret.length() > 45) {
+				System.out.println("Input must be no more than 45 characters.\nPlease enter a shorter input\n");
+			}else validInput = true; //has passed both checks
+		}
+
 		return ret;
-	}
+	}	
+	
+	protected String takeInputString(String prompt, boolean allow0) { //I hate that Java doesn't allow default parameters
+		if (inputIndex >= 0) { //if we're running this from inside a test
+			testOut.add(prompt); //redirect output to testOut
+			return testIn.get(inputIndex++); //returns the next input from the test case 
+		}
+		
+		
+		
+		String ret = null;
+		
+		boolean validInput = false; //used to keep prompting the user until good input is given
+		while(!validInput) {		
+			System.out.println(prompt);
+			try {
+				ret = input.readLine();
+			} catch (IOException e) {
+				System.out.println("Error taking string input\n");
+			}
+			if (ret.length() == 0 && !allow0) {
+				System.out.println("Please type something\n");
+			} else if (ret.length() > 45) {
+				System.out.println("Input must be no more than 45 characters.\nPlease enter a shorter input\n");
+			}else validInput = true; //has passed both checks
+		}
+
+		return ret;
+	}	
+
+	
 	protected int takeInputOption(String prompt, InputOption[] options) {
 		
 		if (inputIndex >= 0) { //if we're running this from inside a test

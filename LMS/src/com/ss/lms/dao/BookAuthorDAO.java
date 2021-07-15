@@ -27,12 +27,12 @@ public class BookAuthorDAO extends BaseDAO<BookAuthor> {
 		
 	}
 	
-	public BookAuthor readBookAuthorByID(int id) throws ClassNotFoundException, SQLException{
+	public List<BookAuthor> readBookAuthorByID(int id) throws ClassNotFoundException, SQLException{
 		List<BookAuthor> ret = read("SELECT * FROM tbl_book_authors WHERE bookId = ?", new Object[] {id});
 		if (ret.size() == 0) { //couldn't find a match
-			return new BookAuthor(0, 0);
+			return null;
 		}
-		return ret.get(0);
+		return ret;
 	}
 	
 	//required for BaseDAO read method

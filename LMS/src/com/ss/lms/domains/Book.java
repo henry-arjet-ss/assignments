@@ -21,7 +21,13 @@ public class Book {
 	}
 	public Book() {
 	}
-	public Book(int id, String title, Publisher publisher) {
+	public String getAuthor() {
+		return author;
+	}
+	public void setAuthor(String author) {
+		this.author = author;
+	}
+	public Book(int id, String title, Publisher publisher) { //author is left off this constructor as it is rarely needed at instantiation
 		this.id = id;
 		this.title = title;
 		this.publisher = publisher;
@@ -29,4 +35,6 @@ public class Book {
 	private int id;
 	private String title;
 	private Publisher publisher;
+	private String author;
+	
 }

@@ -1,5 +1,10 @@
 package com.ss.jb.three.three;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+
 /*
 * Third assignment in JavaBasics 3 
 * This class counts the number of times a (command line specified) char occurs in a paragraph 
@@ -10,7 +15,7 @@ package com.ss.jb.three.three;
 
 public class CharCounter {
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		//input validation
 		if (args.length != 1) {
 			System.out.println("Please give me a single character");
@@ -20,32 +25,25 @@ public class CharCounter {
 			System.out.println("Please give me a single character");
 			return;
 		}
+		FileReader in = null;
+		try {
+			in = new FileReader("resources/input.txt");
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		
 		Character target = args[0].charAt(0);//turns the 'string' to a native char
 		
-		//Away! you are an ass, you are an ass.
-		final String text = "Dost thou not suspect my place? dost thou not "
-				+ "suspect my years? O that he were here to write me "
-				+ "down an ass! But, masters, remember that I am an "
-				+ "ass; though it be not written down, yet forget not "
-				+ "that I am an ass. No, thou villain, thou art full of "
-				+ "piety, as shall be proved upon thee by good witness. "
-				+ "I am a wise fellow, and, which is more, an officer, "
-				+ "and, which is more, a householder, and, which is "
-				+ "more, as pretty a piece of flesh as any is in "
-				+ "Messina, and one that knows the law, go to; and a "
-				+ "rich fellow enough, go to; and a fellow that hath "
-				+ "had losses, and one that hath two gowns and every "
-				+ "thing handsome about him. Bring him away. O that "
-				+ "I had been writ down an ass!";
-		char[] buff = text.toCharArray();
+
 		
 		int acc = 0; //accumulator
-		for (char c : buff) {
+		char c;
+		while((c = (char) in.read()) != (char)-1) {
 			if (target.equals(c)) {
 				acc++;
 			}
 		}
 		
-		System.out.printf("The character %s occured %d times in Dogberry's rant.%n", target, acc);
+		System.out.printf("The character %s occured %d times in Much Ado 4:2.%n", target, acc);
 	}
 }

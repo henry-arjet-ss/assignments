@@ -22,6 +22,7 @@ import com.ss.lms.domains.Borrower;
 import com.ss.lms.domains.Branch;
 import com.ss.lms.domains.Genre;
 import com.ss.lms.domains.Publisher;
+import com.ss.lms.ui.InputOption;
 
 public class AdminService extends UserService {
 	//Logic flows down to up by necessity of Java lacking forward declaration support
@@ -177,7 +178,7 @@ public class AdminService extends UserService {
 	private void populateHashMap() {
 		states = new HashMap<String, DarkVoid>();
 		
-		states.put("overrideDueDate", () ->{                         //OVERRIDE DUE DATE  - TODO 
+		states.put("overrideDueDate", () ->{                        //OVERRIDE DUE DATE  - TODO 
 			
 			ConnectionUtil cUtil = new ConnectionUtil();
 			Connection conn = null;
@@ -206,7 +207,7 @@ public class AdminService extends UserService {
 		
 		
 		
-		states.put("updateBook", () ->{                         //UPDATE BOOK
+		states.put("updateBook", () ->{                         	//UPDATE BOOK
 			
 			ConnectionUtil cUtil = new ConnectionUtil();
 			Connection conn = null;
@@ -302,6 +303,8 @@ public class AdminService extends UserService {
 				StringBuilder genreString = new StringBuilder(genres.get(0).getName()); //a string to display the names of the genres
 				
 				for (int i = 1; i < genres.size(); i++) {
+					genreString.append(" and ");
+					
 					genreString.append(genres.get(i).getName());
 				}
 				

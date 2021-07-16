@@ -1,4 +1,4 @@
-package com.ss.lms.service;
+package com.ss.lms.ui;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -6,14 +6,16 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.ss.lms.ui.InputOption;
+import com.ss.lms.service.DarkVoid;
 
-//parent class for librarian, administrator, and borrower services
-//handles user I/O and a few other common things
-public class UserService {
+public class BaseUI {
 
 	protected boolean executionLoopShouldStop = false;
-	protected void executionLoop() { //runs a given service until forced to stop
+	
+
+	protected DarkVoid currentState; //the currentState is the foundation of my UI state machine. It points to a largely self-contained function 
+					//that will take user input, handle database interactions, and then place another function in currentState to continue
+	protected void executionLoop() { //runs an interface until forced to stop
 		while(!executionLoopShouldStop) {
 			currentState.execute();
 		}
@@ -21,14 +23,11 @@ public class UserService {
 	
 	
 	
-	DarkVoid currentState; //the currentState is the foundation of my UI state machine. It points to a largely self-contained function 
-					//that will take user input, handle database interactions, and then place another function in currentState to continue
 	
 	protected List<String> testIn = null; //input and output for junit tests
 	protected int inputIndex = -1; //which string the class should take for input. Increments every time. Negative value means not in test mode 
 	protected List<String> testOut = new ArrayList<String>();
 	
-	protected ConnectionUtil connUtil = new ConnectionUtil();
 
 	//Scanner input = new Scanner(System.in);
 	BufferedReader input = new BufferedReader(new InputStreamReader(System.in)); //Scanner is a giant PITA
@@ -39,9 +38,7 @@ public class UserService {
 			testOut.add(prompt); //redirect output to testOut
 			return testIn.get(inputIndex++); //returns the next input from the test case 
 		}
-		
-		
-		
+				
 		String ret = null;
 		
 		boolean validInput = false; //used to keep prompting the user until good input is given
@@ -125,5 +122,6 @@ public class UserService {
 		}
 		return option;
 	} 
-
+	
+	
 }

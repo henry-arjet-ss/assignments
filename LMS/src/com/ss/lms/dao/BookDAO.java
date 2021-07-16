@@ -14,35 +14,34 @@ public class BookDAO extends BaseDAO<Book> {
 	public BookDAO(Connection connIn) {
 		super(connIn);
 	}
-	public int addBook(Book book) throws SQLException, ClassNotFoundException {
+	public int create(Book book) throws SQLException, ClassNotFoundException {
 		return save("INSERT INTO tbl_book VALUES (0, ?, ?)", new Object[] {book.getTitle(), book.getPublisher().getId()});
 	}
-	public void updateBook(Book book) throws SQLException, ClassNotFoundException {
+	public void update(Book book) throws SQLException, ClassNotFoundException {
 		save("UPDATE tbl_book SET title = ?, pubId = ? WHERE bookId = ?", new Object[] {book.getTitle(), book.getPublisher().getId(), book.getId()});
 	}
-	public void deleteBook(int id) throws ClassNotFoundException, SQLException {
-		save("DELETE FROM tbl_book WHERE bookId = ?", new Object[] {id});		
+	public void delete(Book input) throws ClassNotFoundException, SQLException {
+		save("DELETE FROM tbl_book WHERE bookId = ?", new Object[] {input.getId()});		
 	}
-	public List<Book> readBooksAuthors() throws ClassNotFoundException, SQLException {
-		return read("SELECT book.*, author.authorName FROM tbl_book book\r\n"
+	public List<Book> read() throws ClassNotFoundException, SQLException { //includes author string
+		return pull("SELECT book.*, author.authorName FROM tbl_book book\r\n"
 				+ "INNER JOIN tbl_book_authors ba ON book.bookId = ba.bookId\r\n"
 				+ "INNER JOIN tbl_author author ON ba.authorId = author.authorId\r\n"
 				+ "ORDER BY book.bookID", null);		//creates duplicate results for multiple authors. Ordering by book id makes processing easier
 	}
 	public List<Book> readAllBooks() throws ClassNotFoundException, SQLException {
-		return read("SELECT * FROM tbl_book", null);
-		
+		return pull("SELECT * FROM tbl_book", null);
 	}
 	
 	public Book readBookByID(int id) throws ClassNotFoundException, SQLException{
-		List<Book> ret = read("SELECT * FROM tbl_book WHERE bookId = ?", new Object[] {id});
+		List<Book> ret = pull("SELECT * FROM tbl_book WHERE bookId = ?", new Object[] {id});
 		if (ret.size() == 0) { //couldn't find a match
 			return new Book(0, "NOT FOUND", new Publisher (0, "DEFAULT", "DEFAULT", "DEFAULT"));
 		}
 		return ret.get(0);
 	}
 	public Book readBookByName(String name) throws ClassNotFoundException, SQLException{
-		List<Book> ret = read("SELECT * FROM tbl_book WHERE title = ?", new Object[] {name});
+		List<Book> ret = pull("SELECT * FROM tbl_book WHERE title = ?", new Object[] {name});
 		if (ret.size() == 0) { //couldn't find a match
 			return new Book(0, "NOT FOUND", new Publisher (0, "DEFAULT", "DEFAULT", "DEFAULT"));
 		}

@@ -13,22 +13,21 @@ public class BookCopiesDAO extends BaseDAO<BookCopies> {
 	public BookCopiesDAO(Connection connIn) {
 		super(connIn);
 	}
-	public void addBookCopies(BookCopies bookCopies) throws SQLException, ClassNotFoundException {
-		save("INSERT INTO tbl_book_copies VALUES (?, ?, ?)", new Object[] {bookCopies.getBookID(), bookCopies.getBranchID(), bookCopies.getNumCopies()});
+	public int create(BookCopies bookCopies) throws SQLException, ClassNotFoundException {
+		return save("INSERT INTO tbl_book_copies VALUES (?, ?, ?)", new Object[] {bookCopies.getBookID(), bookCopies.getBranchID(), bookCopies.getNumCopies()});
 	}
-	public void updateBookCopies(BookCopies bookCopies) throws SQLException, ClassNotFoundException {
+	public void update(BookCopies bookCopies) throws SQLException, ClassNotFoundException {
 		save("UPDATE tbl_book_copies SET branchId = ?, noOfCopies = ? WHERE bookId = ?", new Object[] {bookCopies.getBranchID(), bookCopies.getNumCopies(), bookCopies.getBookID()});
 	}
-	public void deleteBookCopies(int id) throws ClassNotFoundException, SQLException {
-		save("DELETE FROM tbl_book_copies WHERE bookId = ?", new Object[] {id});		
+	public void delete(BookCopies input) throws ClassNotFoundException, SQLException {
+		save("DELETE FROM tbl_book_copies WHERE bookId = ? AND branchId = ?", new Object[] {input.getBookID(), input.getBranchID()});		
 	}
-	public List<BookCopies> readAllBookCopies() throws ClassNotFoundException, SQLException {
-		return read("SELECT * FROM tbl_book_copies", null);
-		
+	public List<BookCopies> read() throws ClassNotFoundException, SQLException {
+		return pull("SELECT * FROM tbl_book_copies", null);
 	}
 	
 	public BookCopies readBookCopiesByID(int id) throws ClassNotFoundException, SQLException{
-		List<BookCopies> ret = read("SELECT * FROM tbl_book_copies WHERE bookId = ?", new Object[] {id});
+		List<BookCopies> ret = pull("SELECT * FROM tbl_book_copies WHERE bookId = ?", new Object[] {id});
 		if (ret.size() == 0) { //couldn't find a match
 			return new BookCopies(0, 0, 0);
 		}

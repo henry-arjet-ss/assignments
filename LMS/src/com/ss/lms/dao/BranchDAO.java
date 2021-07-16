@@ -14,29 +14,29 @@ public class BranchDAO extends BaseDAO<Branch>{
 		super(connIn);
 	}
 	
-	public void addBranch(Branch branch) throws SQLException, ClassNotFoundException {
-		save("INSERT INTO tbl_library_branch VALUES (0, ?, ?)", new Object[] {branch.getName(), branch.getAddress()});
+	public int create(Branch branch) throws SQLException, ClassNotFoundException {
+		return save("INSERT INTO tbl_library_branch VALUES (0, ?, ?)", new Object[] {branch.getName(), branch.getAddress()});
 	}
-	public void updateBranch(Branch branch) throws SQLException, ClassNotFoundException {
+	public void update(Branch branch) throws SQLException, ClassNotFoundException {
 		save("UPDATE tbl_library_branch SET branchName = ?, branchAddress = ? WHERE branchId = ?", new Object[] {branch.getName(), branch.getAddress(), branch.getId()});
 	}
-	public void deleteBranch(int id) throws ClassNotFoundException, SQLException {
-		save("DELETE FROM tbl_library_branch WHERE branchId = ?", new Object[] {id});		
+	public void delete(Branch branch) throws ClassNotFoundException, SQLException {
+		save("DELETE FROM tbl_library_branch WHERE branchId = ?", new Object[] {branch.getId()});		
 	}
-	public List<Branch> readAllBranchs() throws ClassNotFoundException, SQLException {
-		return read("SELECT * FROM tbl_library_branch", null);
+	public List<Branch> read() throws ClassNotFoundException, SQLException {
+		return pull("SELECT * FROM tbl_library_branch", null);
 		
 	}
 	
 	public Branch readBranchByID(int id) throws ClassNotFoundException, SQLException{
-		List<Branch> ret = read("SELECT * FROM tbl_library_branch WHERE branchId = ?", new Object[] {id});
+		List<Branch> ret = pull("SELECT * FROM tbl_library_branch WHERE branchId = ?", new Object[] {id});
 		if (ret.size() == 0) { //couldn't find a match
 			return new Branch(0, "NOT FOUND", "NOT FOUND");
 		}
 		return ret.get(0);
 	}
 	public Branch readBranchByName(String name) throws ClassNotFoundException, SQLException{
-		List<Branch> ret = read("SELECT * FROM tbl_library_branch WHERE branchName = ?", new Object[] {name});
+		List<Branch> ret = pull("SELECT * FROM tbl_library_branch WHERE branchName = ?", new Object[] {name});
 		if (ret.size() == 0) { //couldn't find a match
 			return new Branch(0, "NOT FOUND", "NOT FOUND");
 		}

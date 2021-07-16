@@ -13,26 +13,30 @@ public class BookGenreDAO extends BaseDAO<BookGenre> {
 	public BookGenreDAO(Connection connIn) {
 		super(connIn);
 	}
-	public void addBookGenre(BookGenre bookGenre) throws SQLException, ClassNotFoundException {
-		save("INSERT INTO tbl_book_genres VALUES (?, ?)", new Object[] {bookGenre.getBookID(), bookGenre.getGenreID()});
+	public int create(BookGenre bookGenre) throws SQLException, ClassNotFoundException {
+		return save("INSERT INTO tbl_book_genres VALUES (?, ?)", new Object[] {bookGenre.getBookID(), bookGenre.getGenreID()});
 	}
-	public void updateBookGenre(BookGenre bookGenre) throws SQLException, ClassNotFoundException {
+	public void update(BookGenre bookGenre) throws SQLException, ClassNotFoundException {
 		save("UPDATE tbl_book_genres SET genre_id = ? WHERE bookId = ?", new Object[] {bookGenre.getGenreID(), bookGenre.getBookID()});
 	}
-	public void deleteBookGenre(int id) throws ClassNotFoundException, SQLException {
-		save("DELETE FROM tbl_book_genres WHERE bookId = ?", new Object[] {id});		
+	public void delete(BookGenre input) throws ClassNotFoundException, SQLException {
+		save("DELETE FROM tbl_book_genres WHERE bookId = ?", new Object[] {input.getGenreID()});		
 	}
-	public List<BookGenre> readAllBookGenres() throws ClassNotFoundException, SQLException {
-		return read("SELECT * FROM tbl_book_genres", null);
+	public List<BookGenre> read() throws ClassNotFoundException, SQLException {
+		return pull("SELECT * FROM tbl_book_genres", null);
 		
 	}
 	
 	public List<BookGenre> readBookGenreByID(int id) throws ClassNotFoundException, SQLException{
-		List<BookGenre> ret = read("SELECT * FROM tbl_book_genres WHERE bookId = ?", new Object[] {id});
+		List<BookGenre> ret = pull("SELECT * FROM tbl_book_genres WHERE bookId = ?", new Object[] {id});
 		if (ret.size() == 0) { //couldn't find a match
 			return null;
 		}
 		return ret;
+	}
+	
+	public void deleteByBook(int id) throws ClassNotFoundException, SQLException{
+		save("DELETE FROM tbl_book_genres WHERE bookId = ?", new Object[] {id});
 	}
 	
 	//required for BaseDAO read method

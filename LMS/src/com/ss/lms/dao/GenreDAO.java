@@ -13,29 +13,29 @@ public class GenreDAO extends BaseDAO<Genre> {
 	public GenreDAO(Connection connIn) {
 		super(connIn);
 	}
-	public void addGenre(Genre genre) throws SQLException, ClassNotFoundException {
-		save("INSERT INTO tbl_genre VALUES (0, ?)", new Object[] {genre.getName()});
+	public int create(Genre genre) throws SQLException, ClassNotFoundException {
+		return save("INSERT INTO tbl_genre VALUES (0, ?)", new Object[] {genre.getName()});
 	}
-	public void updateGenre(Genre genre) throws SQLException, ClassNotFoundException {
+	public void update(Genre genre) throws SQLException, ClassNotFoundException {
 		save("UPDATE tbl_genre SET genre_name = ? WHERE genre_id = ?", new Object[] {genre.getName(), genre.getId()});
 	}
-	public void deleteGenre(int id) throws ClassNotFoundException, SQLException {
-		save("DELETE FROM tbl_genre WHERE genre_id = ?", new Object[] {id});		
+	public void delete(Genre genre) throws ClassNotFoundException, SQLException {
+		save("DELETE FROM tbl_genre WHERE genre_id = ?", new Object[] {genre.getId()});		
 	}
-	public List<Genre> readAllGenres() throws ClassNotFoundException, SQLException {
-		return read("SELECT * FROM tbl_genre", null);
+	public List<Genre> read() throws ClassNotFoundException, SQLException {
+		return pull("SELECT * FROM tbl_genre", null);
 		
 	}
 	
 	public Genre readGenreByID(int id) throws ClassNotFoundException, SQLException{
-		List<Genre> ret = read("SELECT * FROM tbl_genre WHERE genre_id = ?", new Object[] {id});
+		List<Genre> ret = pull("SELECT * FROM tbl_genre WHERE genre_id = ?", new Object[] {id});
 		if (ret.size() == 0) { //couldn't find a match
 			return new Genre(0, "NOT FOUND");
 		}
 		return ret.get(0);
 	}
 	public Genre readGenreByName(String name) throws ClassNotFoundException, SQLException{
-		List<Genre> ret = read("SELECT * FROM tbl_genre WHERE genre_name = ?", new Object[] {name});
+		List<Genre> ret = pull("SELECT * FROM tbl_genre WHERE genre_name = ?", new Object[] {name});
 		if (ret.size() == 0) { //couldn't find a match
 			return new Genre(0, "NOT FOUND");
 		}

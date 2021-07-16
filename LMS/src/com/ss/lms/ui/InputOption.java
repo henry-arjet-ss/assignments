@@ -1,4 +1,4 @@
-package com.ss.lms.service;
+package com.ss.lms.ui;
 
 //simple struct for use in takeInputOptions
 

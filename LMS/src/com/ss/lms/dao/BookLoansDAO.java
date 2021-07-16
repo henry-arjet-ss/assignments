@@ -16,30 +16,30 @@ public class BookLoansDAO extends BaseDAO<BookLoans> {
 	public BookLoansDAO(Connection connIn) {
 		super(connIn);
 	}
-	public void addBookLoans(BookLoans bookLoans) throws SQLException, ClassNotFoundException {
-		save("INSERT INTO tbl_book_loans VALUES (?, ?, ?, ?, ?, ?)", new Object[] {bookLoans.getBookID(), bookLoans.getBranchID(), bookLoans.getCardNo(),
+	public int create(BookLoans bookLoans) throws SQLException, ClassNotFoundException {
+		return save("INSERT INTO tbl_book_loans VALUES (?, ?, ?, ?, ?, ?)", new Object[] {bookLoans.getBookID(), bookLoans.getBranchID(), bookLoans.getCardNo(),
 				Timestamp.valueOf(bookLoans.getDateIn().atZoneSameInstant(ZoneOffset.UTC).toLocalDateTime()), //OffsetDateTime to Timestamp
 				Timestamp.valueOf(bookLoans.getDueDate().atZoneSameInstant(ZoneOffset.UTC).toLocalDateTime()),
 				Timestamp.valueOf(bookLoans.getDateOut().atZoneSameInstant(ZoneOffset.UTC).toLocalDateTime()),
 		});
 	}
-	public void updateBookLoans(BookLoans bookLoans) throws SQLException, ClassNotFoundException {
+	public void update(BookLoans bookLoans) throws SQLException, ClassNotFoundException {
 		save("UPDATE tbl_book_loans SET dateIn = ?, dueDate = ?, dateOut = ? WHERE bookId = ? AND branchId = ? AND cardNo = ?", new Object[] {
 				Timestamp.valueOf(bookLoans.getDateIn().atZoneSameInstant(ZoneOffset.UTC).toLocalDateTime()),
 				Timestamp.valueOf(bookLoans.getDueDate().atZoneSameInstant(ZoneOffset.UTC).toLocalDateTime()),
 				Timestamp.valueOf(bookLoans.getDateOut().atZoneSameInstant(ZoneOffset.UTC).toLocalDateTime()),			
 				bookLoans.getBookID(), bookLoans.getBranchID(), bookLoans.getCardNo()});
 	}
-	public void deleteBookLoans(BookLoans bookLoans) throws ClassNotFoundException, SQLException {
+	public void delete(BookLoans bookLoans) throws ClassNotFoundException, SQLException {
 		save("DELETE FROM tbl_book_loans WHERE bookId = ? AND branchId = ? AND cardNo = ?", new Object[] {bookLoans.getBookID(), bookLoans.getBranchID(), bookLoans.getCardNo()});		
 	}
-	public List<BookLoans> readAllBookLoans() throws ClassNotFoundException, SQLException {
-		return read("SELECT * FROM tbl_book_loans", null);
+	public List<BookLoans> read() throws ClassNotFoundException, SQLException {
+		return pull("SELECT * FROM tbl_book_loans", null);
 		
 	}
 	
 	public BookLoans readBookLoansByIDs(int id) throws ClassNotFoundException, SQLException{
-		List<BookLoans> ret = read("SELECT * FROM tbl_book_loans WHERE bookId = ?", new Object[] {id});
+		List<BookLoans> ret = pull("SELECT * FROM tbl_book_loans WHERE bookId = ?", new Object[] {id});
 		if (ret.size() == 0) { //couldn't find a match
 			return new BookLoans(0, 0, 0, null, null, null);
 		}

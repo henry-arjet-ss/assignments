@@ -14,17 +14,10 @@ public abstract class BaseDAO<T> {
 		
 	}
 	
-//	public void save(String sql, Object[] vals) throws ClassNotFoundException, SQLException {
-//		PreparedStatement pstmt = conn.prepareStatement(sql);
-//		if (vals!= null) {
-//			int ct = 1;
-//			for(Object o: vals) {
-//				pstmt.setObject(ct,  o);
-//				ct++;
-//			}
-//		}
-//		pstmt.executeUpdate();
-//	}
+	public abstract int create(T input) throws SQLException, ClassNotFoundException; //returns PK if applicable
+	public abstract List<T> read() throws SQLException, ClassNotFoundException;
+	public abstract void update(T input) throws SQLException, ClassNotFoundException;
+	public abstract void delete(T input) throws SQLException, ClassNotFoundException;
 	
 	public int save(String sql, Object[] vals) throws ClassNotFoundException, SQLException {
 		PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
@@ -42,7 +35,7 @@ public abstract class BaseDAO<T> {
 		} else return 0;
 	}
 	
-	public List<T> read(String sql, Object[] vals) throws ClassNotFoundException, SQLException {
+	public List<T> pull(String sql, Object[] vals) throws ClassNotFoundException, SQLException {
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 		if (vals!= null) {
 			int ct = 1;

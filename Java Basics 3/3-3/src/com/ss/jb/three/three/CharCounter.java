@@ -7,8 +7,8 @@ import java.io.IOException;
 
 /*
 * Third assignment in JavaBasics 3 
-* This class counts the number of times a (command line specified) char occurs in a paragraph 
-* Specifically the closing line of Much Ado About Nothing Act 4 Scene 2
+* This class counts the number of times a (command line specified) char occurs in a file 
+* Specifically Much Ado About Nothing Act 4 Scene 2
 * Henry Arjet 
 * July 2021 Cloud Engineering
 */

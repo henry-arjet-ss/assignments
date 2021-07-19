@@ -36,7 +36,8 @@ WHERE loans.cardNo IS NULL
 ## 4.	For each book that is loaned out from the "Sharpstown" branch and whose DueDate is today, retrieve the book title, the borrower's name, and the borrower's address.
 >All the dates are from 2018, and no two are due on the same day. In order to actually pull a row, I'll pretend today is March 14th 2018 because *12 Years A Slave* is one of only two books on this list I have read
 
-```SELECT book.title, borrower.name, borrower.address 
+```
+SELECT book.title, borrower.name, borrower.address 
 FROM tbl_library_branch branch
 INNER JOIN tbl_book_loans loans ON branch.branchId = loans.branchId
 INNER JOIN tbl_borrower borrower ON loans.cardNo = borrower.cardNo 
@@ -51,7 +52,8 @@ Solomon Northup's Odyssey |||	West Edmondson	||| 00825 Melrose Plaza
 
 ## 5.	For each library branch, retrieve the branch name and the total number of books loaned out from that branch.
 >Too many to list here, again I have put them at the end
-```SELECT branch.branchName, count(*) as booksLoaned
+```
+SELECT branch.branchName, count(*) as booksLoaned
 FROM tbl_library_branch branch
 INNER JOIN tbl_book_loans loans ON branch.branchId = loans.branchId
 GROUP BY branch.branchName

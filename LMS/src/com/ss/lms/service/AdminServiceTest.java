@@ -1,4 +1,4 @@
-package com.ss.lms.service;
+/*package com.ss.lms.service;
 
 import java.util.Arrays;
 import org.junit.jupiter.api.Test;
@@ -16,3 +16,4 @@ class AdminServiceTest {
 	}
 
 }
+*/

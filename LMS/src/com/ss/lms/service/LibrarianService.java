@@ -1,4 +1,4 @@
-package com.ss.lms.service;
+/*package com.ss.lms.service;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -66,23 +66,8 @@ public class LibrarianService extends UserService {
 					return;
 				}
 				
-				/*
 				
-				if ("quit".equals(address)) {
-					conn.close();
-					currentState = states.get("optionSelect");
-					return;
-				}
-				if (name.length() != 0) { //only update if the user wants it to change i.e. if their input is not ""
-					branch.setName(name);
-				}
-				if (address.length() != 0) {
-					branch.setAddress(address);
-				}
 				
-				bdao.updateBranch(branch);
-				conn.commit();
-				System.out.println("Branch updated");*/
 			} catch (Exception e) {
 				System.out.println("Error updating branch\r\nPlease see an administrator");
 				try {
@@ -220,3 +205,4 @@ public class LibrarianService extends UserService {
 	}
 	
 }
+*/

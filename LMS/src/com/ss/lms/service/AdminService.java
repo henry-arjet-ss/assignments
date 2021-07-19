@@ -1,4 +1,4 @@
-package com.ss.lms.service;
+/*package com.ss.lms.service;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -1474,3 +1474,4 @@ public class AdminService extends UserService {
 		states.put("adminEntryPoint", adminEntryPoint);
 	}
 }
+*/

@@ -26,8 +26,8 @@ public class BookCopiesDAO extends BaseDAO<BookCopies> {
 		return pull("SELECT * FROM tbl_book_copies", null);
 	}
 	
-	public BookCopies readBookCopiesByID(int id) throws ClassNotFoundException, SQLException{
-		List<BookCopies> ret = pull("SELECT * FROM tbl_book_copies WHERE bookId = ?", new Object[] {id});
+	public BookCopies readBookCopiesByID(int bookID, int branchID) throws ClassNotFoundException, SQLException{
+		List<BookCopies> ret = pull("SELECT * FROM tbl_book_copies WHERE bookId = ? AND branchId = ?", new Object[] {bookID, branchID});
 		if (ret.size() == 0) { //couldn't find a match
 			return new BookCopies(0, 0, 0);
 		}
@@ -41,6 +41,7 @@ public class BookCopiesDAO extends BaseDAO<BookCopies> {
 			BookCopies bookCopies = new BookCopies();
 			bookCopies.setBookID(rs.getInt("bookId"));
 			bookCopies.setBranchID(rs.getInt("branchId"));
+			bookCopies.setNumCopies(rs.getInt("noOfCopies"));
 			bookCopiess.add(bookCopies);
 			
 		}

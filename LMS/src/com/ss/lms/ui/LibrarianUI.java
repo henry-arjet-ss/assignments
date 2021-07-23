@@ -1,5 +1,10 @@
 package com.ss.lms.ui;
 
+//Smoothstack Essentials LMS project
+//Henry Arjet - July Cloud Engineering
+//This class handles the UI for the Librarian menu
+//It uses a light state machine, assigning functions to currentState and then continually executing currentState
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

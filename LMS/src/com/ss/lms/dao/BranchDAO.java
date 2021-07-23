@@ -1,5 +1,8 @@
 package com.ss.lms.dao;
 
+//Smoothstack Essentials LMS project
+//Henry Arjet - July Cloud Engineering
+
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;

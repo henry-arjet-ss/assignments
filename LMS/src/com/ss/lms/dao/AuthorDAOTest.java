@@ -1,4 +1,4 @@
-/*package com.ss.lms.dao;
+package com.ss.lms.dao;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -33,7 +33,7 @@ class AuthorDAOTest {
 		try {
 			conn = connUtil.getConnection();
 			test = new AuthorDAO(conn);
-			test.addAuthor(new Author(0, "Fidel Castro"));
+			test.create(new Author(0, "Fidel Castro"));
 			conn.commit();
 		} catch (Exception e) {
 			//e.printStackTrace();
@@ -69,7 +69,7 @@ class AuthorDAOTest {
 
 			conn = connUtil.getConnection();
 			test = new AuthorDAO(conn);
-			List<Author> authors = test.readAllAuthors();
+			List<Author> authors = test.read();
 			assertFalse(authors.isEmpty());
 		} catch(Exception e) {
 			//e.printStackTrace();
@@ -93,7 +93,7 @@ class AuthorDAOTest {
 			conn = connUtil.getConnection();
 			test = new AuthorDAO(conn);
 			Author author = new Author(castroID, "Fidel CastBro");
-			test.updateAuthor(author);
+			test.update(author);
 			conn.commit();
 			Author castroNew = test.readAuthorByName("Fidel CastBro");
 			assertEquals("Fidel CastBro", castroNew.getName());
@@ -115,9 +115,8 @@ class AuthorDAOTest {
 			conn = connUtil.getConnection();
 			test = new AuthorDAO(conn);
 			Author castro = test.readAuthorByName("Fidel CastBro");
-			int castroID = castro.getId();
 			
-			test.deleteAuthor(castroID);
+			test.delete(castro);
 			conn.commit();
 			Author castroNew = test.readAuthorByName("Fidel CastBro");
 			assertEquals(0, castroNew.getId()); //AuthorId 0 means not found
@@ -135,4 +134,4 @@ class AuthorDAOTest {
 	
 	
 
-}*/
+}

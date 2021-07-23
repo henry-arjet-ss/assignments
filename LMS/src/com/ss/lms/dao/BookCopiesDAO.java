@@ -1,5 +1,8 @@
  package com.ss.lms.dao;
 
+//Smoothstack Essentials LMS project
+//Henry Arjet - July Cloud Engineering
+ 
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -33,6 +36,12 @@ public class BookCopiesDAO extends BaseDAO<BookCopies> {
 		}
 		return ret.get(0);
 	}
+	public void decrement(int bookID, int branchID) throws SQLException, ClassNotFoundException {
+		save("UPDATE tbl_book_copies SET noOfCopies = noOfCopies - 1 WHERE bookId = ? AND branchId = ?", new Object[] {bookID, branchID});
+	}
+	public void increment(int bookID, int branchID) throws SQLException, ClassNotFoundException {
+		save("UPDATE tbl_book_copies SET noOfCopies = noOfCopies + 1 WHERE bookId = ? AND branchId = ?", new Object[] {bookID, branchID});
+	}
 	
 	//required for BaseDAO read method
 	public List<BookCopies> extractData(ResultSet rs) throws ClassNotFoundException, SQLException {
@@ -47,5 +56,4 @@ public class BookCopiesDAO extends BaseDAO<BookCopies> {
 		}
 		return bookCopiess;
 	}
-
 }

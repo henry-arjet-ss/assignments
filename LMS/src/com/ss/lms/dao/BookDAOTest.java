@@ -1,4 +1,4 @@
-/*package com.ss.lms.dao;
+package com.ss.lms.dao;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -34,7 +34,7 @@ class BookDAOTest {
 		try {
 			conn = connUtil.getConnection();
 			test = new BookDAO(conn);
-			test.addBook(new Book(0, "Fidel Castro: My Life", new Publisher(1, "UNDEF", "UNDEF", "UNDEF")));
+			test.create(new Book(0, "Fidel Castro: My Life", new Publisher(1, "UNDEF", "UNDEF", "UNDEF")));
 			conn.commit();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -72,7 +72,7 @@ class BookDAOTest {
 
 			conn = connUtil.getConnection();
 			test = new BookDAO(conn);
-			List<Book> books = test.readAllBooks();
+			List<Book> books = test.read();
 			assertFalse(books.isEmpty());
 		} catch(Exception e) {
 			//e.printStackTrace();
@@ -96,7 +96,7 @@ class BookDAOTest {
 			conn = connUtil.getConnection();
 			test = new BookDAO(conn);
 			Book book = new Book(castroID, "Fidel CastBro: My Life", new Publisher(1, "UNDEF", "UNDEF", "UNDEF"));
-			test.updateBook(book);
+			test.update(book);
 			conn.commit();
 			Book castroNew = test.readBookByName("Fidel CastBro: My Life");
 			assertEquals("Fidel CastBro: My Life", castroNew.getTitle());
@@ -118,9 +118,8 @@ class BookDAOTest {
 			conn = connUtil.getConnection();
 			test = new BookDAO(conn);
 			Book castro = test.readBookByName("Fidel CastBro: My Life");
-			int castroID = castro.getId();
 			
-			test.deleteBook(castroID);
+			test.delete(castro);
 			conn.commit();
 			Book castroNew = test.readBookByName("Fidel CastBro: My Life");
 			assertEquals(0, castroNew.getId()); //BookId 0 means not found
@@ -138,4 +137,4 @@ class BookDAOTest {
 	
 	
 
-}*/
+}

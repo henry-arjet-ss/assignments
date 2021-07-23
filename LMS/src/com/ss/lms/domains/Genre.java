@@ -1,5 +1,8 @@
 package com.ss.lms.domains;
 
+//Smoothstack Essentials LMS project
+//Henry Arjet - July Cloud Engineering
+
 public class Genre {
 	public int getId() {
 		return id;

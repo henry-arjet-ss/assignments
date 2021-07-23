@@ -1,7 +1,8 @@
 package com.ss.lms.ui;
 
-//simple struct for use in takeInputOptions
-
+//Smoothstack Essentials LMS project
+//Henry Arjet - July Cloud Engineering
+//A simple struct for use in BaseUI.takeInputOptions
 
 public class InputOption {
 	public InputOption(int index, String text) {

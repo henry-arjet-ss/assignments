@@ -1,5 +1,9 @@
 package com.ss.lms.ui;
 
+//Smoothstack Essentials LMS project
+//Henry Arjet - July Cloud Engineering
+//This class handles the common UI functionality including the currentState execution loop and input methods 
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;

@@ -1,5 +1,9 @@
 package com.ss.lms.ui;
 
+//Smoothstack Essentials LMS project
+//Henry Arjet - July Cloud Engineering
+//This class serves as an entry point to the system, calling one of the three UI classes
+
 public class Entry extends BaseUI {
 	
 	

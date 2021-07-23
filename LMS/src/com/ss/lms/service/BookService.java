@@ -1,5 +1,9 @@
 package com.ss.lms.service;
 
+//Smoothstack Essentials LMS project
+//Henry Arjet - July Cloud Engineering
+//Books are used heavily in the UI
+
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -24,6 +28,33 @@ public class BookService extends BaseService<Book> {
 		return new BookDAO(conn);
 	}
 	
+	public List<Book> readLoanedBooks(int cardNum){ //pulls every book that has at least one copy at a given branch
+		List<Book> ret = null;
+		Connection conn = null;
+		try {
+			conn = cUtil.getConnection();
+			BookDAO bdao = new BookDAO(conn);
+			
+			ret = bdao.readLoanedBooks(cardNum);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("Error reading record");
+			try {
+				conn.rollback();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+		} finally {
+			try {
+				conn.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return ret;
+	}
+	
 	public List<Book> readBookBranch(Branch branch){ //pulls every book that has at least one copy at a given branch
 		List<Book> ret = null;
 		Connection conn = null;
@@ -31,13 +62,7 @@ public class BookService extends BaseService<Book> {
 			conn = cUtil.getConnection();
 			BookDAO bdao = new BookDAO(conn);
 			
-			ret = bdao.pull("SELECT book.*, author.authorName FROM tbl_book book\r\n"
-					+ "INNER JOIN tbl_book_authors ba ON book.bookId = ba.bookId\r\n"
-					+ "INNER JOIN tbl_author author ON ba.authorId = author.authorId\r\n"
-					+ "INNER JOIN tbl_book_copies bc ON bc.bookId = book.bookId\r\n"
-					+ "WHERE bc.branchId = ? AND bc.noOfCopies > 0\r\n"
-					+ "ORDER BY book.bookID"
-					, new Object[] {branch.getId()});
+			ret = bdao.readBooksBranch(branch.getId());
 			
 		} catch (Exception e) {
 			e.printStackTrace();

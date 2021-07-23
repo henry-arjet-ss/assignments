@@ -1,5 +1,12 @@
 package com.ss.lms.ui;
 
+//Smoothstack Essentials LMS project
+//Henry Arjet - July Cloud Engineering
+//This class handles the UI for the Administrator menu
+//It uses a light state machine, assigning functions to currentState and then continually executing currentState
+
+import java.time.OffsetDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -12,6 +19,7 @@ import com.ss.lms.domains.Branch;
 import com.ss.lms.domains.Genre;
 import com.ss.lms.domains.Publisher;
 import com.ss.lms.service.AuthorService;
+import com.ss.lms.service.BookLoanService;
 import com.ss.lms.service.BookService;
 import com.ss.lms.service.BorrowerService;
 import com.ss.lms.service.BranchService;
@@ -162,6 +170,9 @@ public class AdminUI extends BaseUI {
 		case 4:
 			currentState = delete;
 			break;
+		case 5:
+			currentState = states.get("overrideDueDate");
+			break;
 		case 6:
 			executionLoopShouldStop = true;
 		}
@@ -169,6 +180,65 @@ public class AdminUI extends BaseUI {
 	
 	private void populateHashMap() {
 		states = new HashMap<String, DarkVoid>();
+		states.put("overrideDueDate", () -> {							//OVERRIDE DUE DATE
+			BorrowerService borrowerServ = new BorrowerService();
+			String prompt = "Enter borrower's card number:";
+			int cardNum = 0; 
+			boolean goodInput = false;//input loop
+			while(!goodInput) {
+				String newNumCopiesStr = takeInputString(prompt);
+				try {
+					cardNum = Integer.parseInt(newNumCopiesStr);
+					if(borrowerServ.verifyCardNum(cardNum)) goodInput = true;
+					else System.out.println("Invalid card number");
+
+				}catch(Exception e) {
+					System.out.println("Please enter an integer");
+				}
+			}
+			BookService bServ = new BookService();
+			List<Book> books = bServ.readLoanedBooks(cardNum);
+			
+			prompt = "Select the loan you wish to extend:";
+			int[] booksMap = new int[books.size()]; //maps from optionIndex - 1 to bookID
+			List<InputOption> options = new ArrayList<InputOption>();
+			for (int i = 0; i < books.size(); i++) {
+				options.add(new InputOption(i+1,books.get(i).getTitle() + " by " + books.get(i).getAuthor() + "\r\n    From " + books.get(i).getBranch()));				
+				booksMap[i] = books.get(i).getId();
+			}
+			options.add(new InputOption(books.size() + 1, "Quit to options menu"));
+			int bookIndex = takeInputOption(prompt, options.toArray(new InputOption[options.size()])); //bookIndex stores the return value
+			
+			if (bookIndex == books.size() + 1) { //quit to previous
+				currentState = adminEntryPoint;
+				return;
+			}
+			
+			Book book = books.get(bookIndex - 1);		
+			BookLoanService loanServ = new BookLoanService();
+			OffsetDateTime dueDate = loanServ.getDueDate(book, cardNum);
+			DateTimeFormatter fmt = DateTimeFormatter.ofPattern("MMM d yyyy");
+			
+			prompt = "Due date is on " + fmt.format(dueDate) + " UTC\r\nPlease enter how many days you wish to extend it";
+			int days = 0; 
+			goodInput = false;//input loop
+			while(!goodInput) {
+				String daysStr = takeInputString(prompt);
+				try {
+					days = Integer.parseInt(daysStr);
+					if(days > 0) goodInput = true;
+					else System.out.println("Must be greater than zero");
+
+				}catch(Exception e) {
+					System.out.println("Please enter an integer");
+				}
+			}	
+			dueDate = dueDate.plusDays(days);
+			
+			loanServ.extendDate(book, cardNum, dueDate);
+			currentState = adminEntryPoint;
+		});
+		
 		
 		states.put("createBook", () -> {                             //CREATE BOOK
 			Book book = new Book ();
@@ -902,22 +972,13 @@ public class AdminUI extends BaseUI {
 				currentState = states.get("adminEntryPoint");							
 		});
 		
-		states.put("overrideDueDate", () ->{                        //OVERRIDE DUE DATE  - TODO 
-			System.out.println("This feature has not yet been implemented");
-			
-			currentState = states.get("adminEntryPoint");
-			
-		});
-		
 
 		states.put("adminEntryPoint", adminEntryPoint);
 		states.put("create", create);
 		states.put("read", read);
 		states.put("update", update);
-		states.put("delete", delete);
-		
+		states.put("delete", delete);	
 	
-	}
-	
+	}	
 	
 }

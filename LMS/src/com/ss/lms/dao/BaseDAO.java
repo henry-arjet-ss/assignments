@@ -1,5 +1,10 @@
 package com.ss.lms.dao;
 
+//Smoothstack Essentials LMS project
+//Henry Arjet - July Cloud Engineering
+//Base class for all database access objects
+//It is used polymorphically by the BaseService class, which is why I declare CRUD here
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -19,7 +24,7 @@ public abstract class BaseDAO<T> {
 	public abstract void update(T input) throws SQLException, ClassNotFoundException;
 	public abstract void delete(T input) throws SQLException, ClassNotFoundException;
 	
-	public int save(String sql, Object[] vals) throws ClassNotFoundException, SQLException {
+	public int save(String sql, Object[] vals) throws ClassNotFoundException, SQLException { //method that executes sql query and reterns primary key
 		PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 		if (vals!= null) {
 			int ct = 1;
@@ -35,7 +40,7 @@ public abstract class BaseDAO<T> {
 		} else return 0;
 	}
 	
-	public List<T> pull(String sql, Object[] vals) throws ClassNotFoundException, SQLException {
+	public List<T> pull(String sql, Object[] vals) throws ClassNotFoundException, SQLException { //method that executes sql query and returns a ResultSet
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 		if (vals!= null) {
 			int ct = 1;

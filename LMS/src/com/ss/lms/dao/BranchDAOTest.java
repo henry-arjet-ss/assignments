@@ -1,4 +1,4 @@
-/*package com.ss.lms.dao;
+package com.ss.lms.dao;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -33,7 +33,7 @@ class BranchDAOTest {
 		try {
 			conn = connUtil.getConnection();
 			test = new BranchDAO(conn);
-			test.addBranch(new Branch(0, "Havana Central", "Havana, Cuba"));
+			test.create(new Branch(0, "Havana Central", "Havana, Cuba"));
 			conn.commit();
 		} catch (Exception e) {
 			//e.printStackTrace();
@@ -69,7 +69,7 @@ class BranchDAOTest {
 
 			conn = connUtil.getConnection();
 			test = new BranchDAO(conn);
-			List<Branch> branchs = test.readAllBranchs();
+			List<Branch> branchs = test.read();
 			assertFalse(branchs.isEmpty());
 		} catch(Exception e) {
 			//e.printStackTrace();
@@ -94,7 +94,7 @@ class BranchDAOTest {
 			conn = connUtil.getConnection();
 			test = new BranchDAO(conn);
 			Branch branch = new Branch(castroID, "Havana Outer", "Havana, Cuba");
-			test.updateBranch(branch);
+			test.update(branch);
 			conn.commit();
 			Branch castroNew = test.readBranchByName("Havana Outer");
 			assertEquals("Havana Outer", castroNew.getName());
@@ -119,7 +119,7 @@ class BranchDAOTest {
 			int castroID = castro.getId();
 			assertNotEquals(0, castroID);//would mean that record was not found
 			
-			test.deleteBranch(castroID);
+			test.delete(castro);
 			conn.commit();
 			Branch castroNew = test.readBranchByName("Havana Outer");
 			assertEquals(0, castroNew.getId()); //branchId 0 means not found
@@ -132,4 +132,4 @@ class BranchDAOTest {
 			conn.close();
 		}
 	}
-}*/
+}

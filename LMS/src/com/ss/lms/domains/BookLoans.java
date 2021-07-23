@@ -1,5 +1,8 @@
 package com.ss.lms.domains;
 
+//Smoothstack Essentials LMS project
+//Henry Arjet - July Cloud Engineering
+
 import java.time.OffsetDateTime;
 
 public class BookLoans {

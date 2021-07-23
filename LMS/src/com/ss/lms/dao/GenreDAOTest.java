@@ -1,4 +1,4 @@
-/*package com.ss.lms.dao;
+package com.ss.lms.dao;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -33,7 +33,7 @@ class GenreDAOTest {
 		try {
 			conn = connUtil.getConnection();
 			test = new GenreDAO(conn);
-			test.addGenre(new Genre(0, "Castroism"));
+			test.create(new Genre(0, "Castroism"));
 			conn.commit();
 		} catch (Exception e) {
 			//e.printStackTrace();
@@ -69,7 +69,7 @@ class GenreDAOTest {
 
 			conn = connUtil.getConnection();
 			test = new GenreDAO(conn);
-			List<Genre> genres = test.readAllGenres();
+			List<Genre> genres = test.read();
 			assertFalse(genres.isEmpty());
 		} catch(Exception e) {
 			//e.printStackTrace();
@@ -93,7 +93,7 @@ class GenreDAOTest {
 			conn = connUtil.getConnection();
 			test = new GenreDAO(conn);
 			Genre genre = new Genre(castroID, "CastBroism");
-			test.updateGenre(genre);
+			test.update(genre);
 			conn.commit();
 			Genre castroNew = test.readGenreByName("CastBroism");
 			assertEquals("CastBroism", castroNew.getName());
@@ -115,9 +115,8 @@ class GenreDAOTest {
 			conn = connUtil.getConnection();
 			test = new GenreDAO(conn);
 			Genre castro = test.readGenreByName("CastBroism");
-			int castroID = castro.getId();
 			
-			test.deleteGenre(castroID);
+			test.delete(castro);
 			conn.commit();
 			Genre castroNew = test.readGenreByName("CastBroism");
 			assertEquals(0, castroNew.getId()); //GenreId 0 means not found
@@ -136,4 +135,3 @@ class GenreDAOTest {
 	
 
 }
-*/

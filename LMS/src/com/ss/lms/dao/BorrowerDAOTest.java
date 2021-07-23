@@ -1,4 +1,4 @@
-/*package com.ss.lms.dao;
+package com.ss.lms.dao;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -33,7 +33,7 @@ class BorrowerDAOTest {
 		try {
 			conn = connUtil.getConnection();
 			test = new BorrowerDAO(conn);
-			test.addBorrower(new Borrower(0, "Fidel Castro", "Havana, Cuba", "+53 (7) 555-1959"));
+			test.create(new Borrower(0, "Fidel Castro", "Havana, Cuba", "+53 (7) 555-1959"));
 			conn.commit();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -69,7 +69,7 @@ class BorrowerDAOTest {
 
 			conn = connUtil.getConnection();
 			test = new BorrowerDAO(conn);
-			List<Borrower> borrowers = test.readAllBorrowers();
+			List<Borrower> borrowers = test.read();
 			assertFalse(borrowers.isEmpty());
 		} catch(Exception e) {
 			//e.printStackTrace();
@@ -94,7 +94,7 @@ class BorrowerDAOTest {
 			conn = connUtil.getConnection();
 			test = new BorrowerDAO(conn);
 			Borrower borrower = new Borrower(castroID, "Fidel CastBro", "Havana, Cuba", "+53 (7) 555-1959");
-			test.updateBorrower(borrower);
+			test.update(borrower);
 			conn.commit();
 			Borrower castroNew = test.readBorrowerByName("Fidel CastBro");
 			assertEquals("Fidel CastBro", castroNew.getName());
@@ -119,7 +119,7 @@ class BorrowerDAOTest {
 			int castroID = castro.getCardNo();
 			assertNotEquals(0, castroID);//would mean that record was not found
 			
-			test.deleteBorrower(castroID);
+			test.delete(castro);
 			conn.commit();
 			Borrower castroNew = test.readBorrowerByName("Fidel CastBro");
 			assertEquals(0, castroNew.getCardNo()); //borrowerId 0 means not found
@@ -137,4 +137,4 @@ class BorrowerDAOTest {
 	
 	
 
-}*/
+}

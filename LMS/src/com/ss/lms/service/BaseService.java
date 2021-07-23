@@ -6,7 +6,11 @@ import java.util.List;
 
 import com.ss.lms.dao.BaseDAO;
 
-//base class for all services
+//Smoothstack Essentials LMS project
+//Henry Arjet - July Cloud Engineering
+//Base class for all services
+//Acts as a template, allowing CRUD functions to be carried through to child objects by passing their DAO as type
+//Relies on DAO polymorphism implemented through BaseDAO class to guarantee functions such as the constructor and CRUD
 
 public abstract class BaseService<T> {
 	
@@ -14,12 +18,13 @@ public abstract class BaseService<T> {
 	
 	protected abstract BaseDAO<T> getDAO(Connection conn); //used to return a DAO of the correct type
 	
-	public void create(T input) {
+	public int create(T input) {
 		Connection conn = null;
+		int ret = 0;
 		try {
 			conn = cUtil.getConnection();
 			BaseDAO<T> dao = getDAO(conn);
-			dao.create(input);
+			ret = dao.create(input);
 			conn.commit();
 			System.out.println("Record Created");
 		} catch (Exception e) {
@@ -37,6 +42,7 @@ public abstract class BaseService<T> {
 				e.printStackTrace();
 			}
 		}
+		return ret;
 	}
 	
 	public List<T> read(){
@@ -73,7 +79,7 @@ public abstract class BaseService<T> {
 			BaseDAO<T> dao = getDAO(conn);		
 			dao.update(input);
 			conn.commit();
-			System.out.println("Record updated");
+			System.out.println("Record Updated");
 		} catch (Exception e) {
 			System.out.println("Error updating record");
 			try {

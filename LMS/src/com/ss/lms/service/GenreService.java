@@ -1,5 +1,8 @@
 package com.ss.lms.service;
 
+//Smoothstack Essentials LMS project
+//Henry Arjet - July Cloud Engineering
+
 import java.sql.Connection;
 
 import com.ss.lms.dao.BaseDAO;

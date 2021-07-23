@@ -1,4 +1,4 @@
-/*package com.ss.lms.dao;
+package com.ss.lms.dao;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -33,7 +33,7 @@ class PublisherDAOTest {
 		try {
 			conn = connUtil.getConnection();
 			test = new PublisherDAO(conn);
-			test.addPublisher(new Publisher(0, "Fidel Castro Publishing", "Havana, Cuba", "+53 (7) 555-1959"));
+			test.create(new Publisher(0, "Fidel Castro Publishing", "Havana, Cuba", "+53 (7) 555-1959"));
 			conn.commit();
 		} catch (Exception e) {
 			//e.printStackTrace();
@@ -69,7 +69,7 @@ class PublisherDAOTest {
 
 			conn = connUtil.getConnection();
 			test = new PublisherDAO(conn);
-			List<Publisher> publishers = test.readAllPublishers();
+			List<Publisher> publishers = test.read();
 			assertFalse(publishers.isEmpty());
 		} catch(Exception e) {
 			//e.printStackTrace();
@@ -94,7 +94,7 @@ class PublisherDAOTest {
 			conn = connUtil.getConnection();
 			test = new PublisherDAO(conn);
 			Publisher publisher = new Publisher(castroID, "Fidel CastBro Publishing", "Havana, Cuba", "+53 (7) 555-1959");
-			test.updatePublisher(publisher);
+			test.update(publisher);
 			conn.commit();
 			Publisher castroNew = test.readPublisherByName("Fidel CastBro Publishing");
 			assertEquals("Fidel CastBro Publishing", castroNew.getName());
@@ -119,7 +119,7 @@ class PublisherDAOTest {
 			int castroID = castro.getId();
 			assertNotEquals(0, castroID);//would mean that record was not found
 			
-			test.deletePublisher(castroID);
+			test.delete(castro);
 			conn.commit();
 			Publisher castroNew = test.readPublisherByName("Fidel CastBro Publishing");
 			assertEquals(0, castroNew.getId()); //publisherId 0 means not found
@@ -138,4 +138,3 @@ class PublisherDAOTest {
 	
 
 }
-*/

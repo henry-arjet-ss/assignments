@@ -27,17 +27,7 @@ public class BookLoansDAO extends BaseDAO<BookLoans> {
 		});
 	}
 	public void update(BookLoans bookLoans) throws SQLException, ClassNotFoundException {
-		if (bookLoans.getDateIn() != null) //allows user to update the date in optionally
-			save("UPDATE tbl_book_loans SET dateIn = ?, dueDate = ?, dateOut = ? WHERE bookId = ? AND branchId = ? AND cardNo = ?", new Object[] {
-					Timestamp.valueOf(bookLoans.getDateIn().atZoneSameInstant(ZoneOffset.UTC).toLocalDateTime()),
-					Timestamp.valueOf(bookLoans.getDueDate().atZoneSameInstant(ZoneOffset.UTC).toLocalDateTime()),
-					Timestamp.valueOf(bookLoans.getDateOut().atZoneSameInstant(ZoneOffset.UTC).toLocalDateTime()),			
-					bookLoans.getBookID(), bookLoans.getBranchID(), bookLoans.getCardNo()});
-		else
-			save("UPDATE tbl_book_loans SET dueDate = ?, dateOut = ? WHERE bookId = ? AND branchId = ? AND cardNo = ?", new Object[] {
-					Timestamp.valueOf(bookLoans.getDueDate().atZoneSameInstant(ZoneOffset.UTC).toLocalDateTime()),
-					Timestamp.valueOf(bookLoans.getDateOut().atZoneSameInstant(ZoneOffset.UTC).toLocalDateTime()),			
-					bookLoans.getBookID(), bookLoans.getBranchID(), bookLoans.getCardNo()});
+		//this should never be hit;
 	}
 	public void delete(BookLoans bookLoans) throws ClassNotFoundException, SQLException {
 		save("DELETE FROM tbl_book_loans WHERE bookId = ? AND branchId = ? AND cardNo = ?", new Object[] {bookLoans.getBookID(), bookLoans.getBranchID(), bookLoans.getCardNo()});		

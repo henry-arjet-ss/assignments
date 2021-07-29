@@ -33,7 +33,7 @@ class BorrowerDAOTest {
 		try {
 			conn = connUtil.getConnection();
 			test = new BorrowerDAO(conn);
-			test.create(new Borrower(0, "Fidel Castro", "Havana, Cuba", "+53 (7) 555-1959"));
+			test.create(new Borrower(0, "Raul Castro", "Havana, Cuba", "+53 (7) 555-1959"));
 			conn.commit();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -50,8 +50,8 @@ class BorrowerDAOTest {
 		try {
 			conn = connUtil.getConnection();
 			test = new BorrowerDAO(conn);
-			Borrower castro = test.readBorrowerByName("Fidel Castro");
-			assertEquals("Fidel Castro", castro.getName());
+			Borrower castro = test.readBorrowerByName("Raul Castro");
+			assertEquals("Raul Castro", castro.getName());
 		} catch(Exception e) {
 			e.printStackTrace();
 			System.out.println("failed to pull Castro");
@@ -87,17 +87,17 @@ class BorrowerDAOTest {
 		try {
 			conn = connUtil.getConnection();
 			test = new BorrowerDAO(conn);
-			Borrower castro = test.readBorrowerByName("Fidel Castro");
+			Borrower castro = test.readBorrowerByName("Raul Castro");
 			int castroID = castro.getCardNo();
 			assertNotEquals(0, castroID);//would mean that record was not found
 			
 			conn = connUtil.getConnection();
 			test = new BorrowerDAO(conn);
-			Borrower borrower = new Borrower(castroID, "Fidel CastBro", "Havana, Cuba", "+53 (7) 555-1959");
+			Borrower borrower = new Borrower(castroID, "Raul CastBro", "Havana, Cuba", "+53 (7) 555-1959");
 			test.update(borrower);
 			conn.commit();
-			Borrower castroNew = test.readBorrowerByName("Fidel CastBro");
-			assertEquals("Fidel CastBro", castroNew.getName());
+			Borrower castroNew = test.readBorrowerByName("Raul CastBro");
+			assertEquals("Raul CastBro", castroNew.getName());
 		} catch(Exception e) {
 			//e.printStackTrace();
 			conn.rollback();
@@ -115,13 +115,13 @@ class BorrowerDAOTest {
 		try {
 			conn = connUtil.getConnection();
 			test = new BorrowerDAO(conn);
-			Borrower castro = test.readBorrowerByName("Fidel CastBro");
+			Borrower castro = test.readBorrowerByName("Raul CastBro");
 			int castroID = castro.getCardNo();
 			assertNotEquals(0, castroID);//would mean that record was not found
 			
 			test.delete(castro);
 			conn.commit();
-			Borrower castroNew = test.readBorrowerByName("Fidel CastBro");
+			Borrower castroNew = test.readBorrowerByName("Raul CastBro");
 			assertEquals(0, castroNew.getCardNo()); //borrowerId 0 means not found
 		} catch(Exception e) {
 			conn.rollback();

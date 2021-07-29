@@ -82,8 +82,9 @@ public class BookService extends BaseService<Book> {
 		return ret;
 	}
 	
-	public void addBookFull(Book book, List<Integer> genreIDs, List<Integer> authorIDs) {
+	public int addBookFull(Book book, List<Integer> genreIDs, List<Integer> authorIDs) {
 		Connection conn = null;
+		int ret = 0;
 		try {
 			conn = cUtil.getConnection();
 			BookDAO bdao = new BookDAO(conn);
@@ -103,6 +104,7 @@ public class BookService extends BaseService<Book> {
 			}
 			
 			conn.commit();
+			ret = book.getId();
 			System.out.println("Record Created");
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -119,6 +121,7 @@ public class BookService extends BaseService<Book> {
 				e.printStackTrace();
 			}
 		}
+		return ret;
 		
 	}
 	

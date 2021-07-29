@@ -129,9 +129,4 @@ class AuthorDAOTest {
 			conn.close();
 		}
 	}
-	
-	
-	
-	
-
 }

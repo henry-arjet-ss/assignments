@@ -58,7 +58,7 @@ class BookLoanServiceTest {
 		book.setBranchID(3);
 		serv.extendDate(book, 9, extendedDate);
 		OffsetDateTime newDueDate = serv.getDueDate(book, 9);
-		assert(newDueDate.isAfter(OffsetDateTime.now().plusDays(9))); //I just need to check that it is extended a bit
+		assertTrue(newDueDate.isAfter(OffsetDateTime.now().plusDays(9))); //I just need to check that it is extended a bit
 	}
 
 	@Order(4)

@@ -20,7 +20,7 @@ public class BookCopiesDAO extends BaseDAO<BookCopies> {
 		return save("INSERT INTO tbl_book_copies VALUES (?, ?, ?)", new Object[] {bookCopies.getBookID(), bookCopies.getBranchID(), bookCopies.getNumCopies()});
 	}
 	public void update(BookCopies bookCopies) throws SQLException, ClassNotFoundException {
-		save("UPDATE tbl_book_copies SET branchId = ?, noOfCopies = ? WHERE bookId = ?", new Object[] {bookCopies.getBranchID(), bookCopies.getNumCopies(), bookCopies.getBookID()});
+		save("UPDATE tbl_book_copies SET noOfCopies = ? WHERE bookId = ? AND branchId = ?", new Object[] {bookCopies.getNumCopies(), bookCopies.getBookID(), bookCopies.getBranchID()});
 	}
 	public void delete(BookCopies input) throws ClassNotFoundException, SQLException {
 		save("DELETE FROM tbl_book_copies WHERE bookId = ? AND branchId = ?", new Object[] {input.getBookID(), input.getBranchID()});		

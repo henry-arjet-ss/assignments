@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/firstMavenProject/static/css/main.b062d4a8.chunk.css",
+    "main.js": "/firstMavenProject/static/js/main.7da775f6.chunk.js",
+    "main.js.map": "/firstMavenProject/static/js/main.7da775f6.chunk.js.map",
+    "runtime-main.js": "/firstMavenProject/static/js/runtime-main.d0f5fcc5.js",
+    "runtime-main.js.map": "/firstMavenProject/static/js/runtime-main.d0f5fcc5.js.map",
+    "static/js/2.2c134b80.chunk.js": "/firstMavenProject/static/js/2.2c134b80.chunk.js",
+    "static/js/2.2c134b80.chunk.js.map": "/firstMavenProject/static/js/2.2c134b80.chunk.js.map",
+    "static/js/3.18c83d63.chunk.js": "/firstMavenProject/static/js/3.18c83d63.chunk.js",
+    "static/js/3.18c83d63.chunk.js.map": "/firstMavenProject/static/js/3.18c83d63.chunk.js.map",
+    "index.html": "/firstMavenProject/index.html",
+    "static/css/main.b062d4a8.chunk.css.map": "/firstMavenProject/static/css/main.b062d4a8.chunk.css.map",
+    "static/js/2.2c134b80.chunk.js.LICENSE.txt": "/firstMavenProject/static/js/2.2c134b80.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.d0f5fcc5.js",
+    "static/js/2.2c134b80.chunk.js",
+    "static/css/main.b062d4a8.chunk.css",
+    "static/js/main.7da775f6.chunk.js"
+  ]
+}
